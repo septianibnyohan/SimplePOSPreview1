@@ -67,5 +67,11 @@ namespace KansarPOS
             frm.LoadStockIn();
             
         }
+
+        private void btnPOS_Click(object sender, System.EventArgs e)
+        {
+            frmPOS frm = new frmPOS();
+            frm.ShowDialog();
+        }
     }
 }

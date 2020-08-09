@@ -66,6 +66,22 @@ namespace KansarPOS
             cn.Close();
         }
 
+        private void LoadStockInHistory()
+        {
+            int i = 0;
+            dataGridView2.Rows.Clear();
+            cn.Open();
+            cm = new SQLiteCommand("select * from " + Views.Stockin + " where date(sdate) between '" + date1.Value.ToString("yyyy-MM-dd") + "' AND '" + date2.Value.ToString("yyyy-MM-dd") + "' and status like 'Done'", cn);
+            dr = cm.ExecuteReader();
+            while (dr.Read())
+            {
+                i++;
+                dataGridView1.Rows.Add(i, dr[0].ToString(), dr[1].ToString(), dr[2].ToString(), dr[3].ToString(), dr[4].ToString(), DateTime.Parse(dr[5].ToString()).ToString("yyyy-MM-dd"), dr[6].ToString());
+            }
+            dr.Close();
+            cn.Close();
+        }
+
         public void Clear()
         {
             txtBy.Clear();
@@ -130,6 +146,11 @@ namespace KansarPOS
                 cn.Close();
                 MessageBox.Show(ex.Message, stitle, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+        }
+
+        private void btnLoad_Click(object sender, EventArgs e)
+        {
+            LoadStockInHistory();
         }
     }
 }
